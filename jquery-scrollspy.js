@@ -3,8 +3,6 @@
  * Author: @sxalexander
  * Licensed under the MIT license
  */
-
-
 ;(function ( $, window, document, undefined ) {
 
     $.fn.extend({
@@ -14,6 +12,7 @@
             min: 0,
             max: 0,
             mode: 'vertical',
+            namespace: 'scrollspy',
             buffer: 0,
             container: window,
             onEnter: options.onEnter ? options.onEnter : [],
@@ -34,7 +33,7 @@
               var inside = false;
                             
               /* add listener to container */
-              $container.bind('scroll', function(e){
+              $container.bind('scroll.' + o.namespace, function(e){
                   var position = {top: $(this).scrollTop(), left: $(this).scrollLeft()};
                   var xy = (mode == 'vertical') ? position.top + buffer : position.left + buffer;
                   var max = o.max;
@@ -69,7 +68,7 @@
                       
                      }
                      
-                     /* triger tick event */
+                     /* trigger tick event */
                      $(element).trigger('scrollTick', {position: position, inside: inside, enters: enters, leaves: leaves})
                      if($.isFunction(o.onTick)){
                        o.onTick(element, position, inside, enters, leaves);
@@ -95,4 +94,4 @@
     })
 
     
-})( jQuery, window );
+})( jQuery, window, document, undefined );
